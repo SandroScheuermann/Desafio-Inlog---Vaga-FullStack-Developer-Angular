@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inlog.Desafio.Backend.Domain", "Inlog.Desafio.Backend.Domain\Inlog.Desafio.Backend.Domain.csproj", "{196CB21C-5F44-469C-B674-80F066B1E458}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inlog.Desafio.Backend.Domain", "Inlog.Desafio.Backend.Domain\Inlog.Desafio.Backend.Domain.csproj", "{196CB21C-5F44-469C-B674-80F066B1E458}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - API", "01 - API", "{2EF74521-1504-4D91-9E97-301F20F1D9F7}"
 EndProject
@@ -11,17 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Domain", "03 - Domain"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - Infra", "04 - Infra", "{B3EFD0CC-AD37-4452-B3DB-B2272EBF0548}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inlog.Desafio.Backend.Infra.Database", "Inlog.Desafio.Backend.Infra.Database\Inlog.Desafio.Backend.Infra.Database.csproj", "{89BFCF31-4532-47D9-8C10-D9CA6E857F9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inlog.Desafio.Backend.Infra.Database", "Inlog.Desafio.Backend.Infra.Database\Inlog.Desafio.Backend.Infra.Database.csproj", "{89BFCF31-4532-47D9-8C10-D9CA6E857F9C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Application", "02 - Application", "{FB8736C8-B052-4ACD-8E2C-E1171F103D70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inlog.Desafio.Backend.Application", "Inlog.Desafio.Backend.Application\Inlog.Desafio.Backend.Application.csproj", "{365F616E-1994-4826-9F48-027B852E2A38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inlog.Desafio.Backend.Application", "Inlog.Desafio.Backend.Application\Inlog.Desafio.Backend.Application.csproj", "{365F616E-1994-4826-9F48-027B852E2A38}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 - Test", "05 - Test", "{7E96283F-BBCE-4314-B14B-21FA79FBFAD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inlog.Desafio.Backend.Test", "Inlog.Desafio.Backend.Test\Inlog.Desafio.Backend.Test.csproj", "{B779F75D-9D30-4F76-8370-18709E169EA4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inlog.Desafio.Backend.WebApi", "Inlog.Desafio.Backend.WebApi\Inlog.Desafio.Backend.WebApi.csproj", "{B668CB45-AC5E-4FFB-A9A9-548A310E2113}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inlog.Desafio.Backend.WebApi", "Inlog.Desafio.Backend.WebApi\Inlog.Desafio.Backend.WebApi.csproj", "{B668CB45-AC5E-4FFB-A9A9-548A310E2113}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +39,6 @@ Global
 		{365F616E-1994-4826-9F48-027B852E2A38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{365F616E-1994-4826-9F48-027B852E2A38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{365F616E-1994-4826-9F48-027B852E2A38}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B779F75D-9D30-4F76-8370-18709E169EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B779F75D-9D30-4F76-8370-18709E169EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B779F75D-9D30-4F76-8370-18709E169EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B779F75D-9D30-4F76-8370-18709E169EA4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B668CB45-AC5E-4FFB-A9A9-548A310E2113}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B668CB45-AC5E-4FFB-A9A9-548A310E2113}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B668CB45-AC5E-4FFB-A9A9-548A310E2113}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,7 +51,6 @@ Global
 		{196CB21C-5F44-469C-B674-80F066B1E458} = {4C931CAA-34A6-4297-A10A-C5D45B5AF4A5}
 		{89BFCF31-4532-47D9-8C10-D9CA6E857F9C} = {B3EFD0CC-AD37-4452-B3DB-B2272EBF0548}
 		{365F616E-1994-4826-9F48-027B852E2A38} = {FB8736C8-B052-4ACD-8E2C-E1171F103D70}
-		{B779F75D-9D30-4F76-8370-18709E169EA4} = {7E96283F-BBCE-4314-B14B-21FA79FBFAD7}
 		{B668CB45-AC5E-4FFB-A9A9-548A310E2113} = {2EF74521-1504-4D91-9E97-301F20F1D9F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

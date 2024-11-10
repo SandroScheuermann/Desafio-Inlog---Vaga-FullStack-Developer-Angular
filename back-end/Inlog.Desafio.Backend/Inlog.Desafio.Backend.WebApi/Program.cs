@@ -1,11 +1,25 @@
-var builder = WebApplication.CreateBuilder(args);
+using FluentValidation;
+using Inlog.Desafio.Backend.Application.Configuration;
+using Inlog.Desafio.Backend.Application.Handlers;
+using Inlog.Desafio.Backend.Application.Validators;
+using Inlog.Desafio.Backend.Domain.Repositories;
+using Inlog.Desafio.Backend.Infra.Database.Repositories;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args); 
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers(); 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<DefaultSettings>(builder.Configuration.GetSection("DefaultMongoDbSettings"));
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining(typeof(CadastrarVeiculoCommandHandler)));
+
+builder.Services.AddScoped<IVeiculoRepository, VeiculoRepository>();
+builder.Services.AddScoped<ITelemetriaRepository, TelemetriaRepository>();
+builder.Services.AddScoped<ITelemetriaHistoricoRepository, TelemetriaHistoricoRepository>(); 
+
+builder.Services.AddValidatorsFromAssemblyContaining<CadastrarVeiculoCommandValidator>(); 
 
 var app = builder.Build();
 
