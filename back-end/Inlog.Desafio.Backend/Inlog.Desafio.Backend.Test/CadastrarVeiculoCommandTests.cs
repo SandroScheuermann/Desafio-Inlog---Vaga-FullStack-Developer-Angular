@@ -1,12 +1,12 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using Inlog.Desafio.Backend.Application.Commands;
 using Inlog.Desafio.Backend.Application.Handlers;
 using Inlog.Desafio.Backend.Application.Requests;
+using Inlog.Desafio.Backend.Application.ResultHandling.Errors;
 using Inlog.Desafio.Backend.Application.Validators;
 using Inlog.Desafio.Backend.Domain.Models;
 using Inlog.Desafio.Backend.Domain.Repositories;
 using Moq;
-using NUnit.Framework;
 
 namespace Inlog.Desafio.Backend.Test
 {
@@ -18,23 +18,23 @@ namespace Inlog.Desafio.Backend.Test
 
         public required CadastrarVeiculoCommandHandler _cadastrarVeiculoHandler;
 
-        public required CadastrarVeiculoCommandValidator _cadastrarVeiculovalidator;
+        public required CadastrarVeiculoRequestValidator _cadastrarVeiculovalidator;
 
         [SetUp]
         public void Setup()
         {
             _veiculoRepository = new();
-             
+
             _veiculoRepository
                 .Setup(repo => repo.InsertAsync(It.IsAny<VeiculoEntity>()))
                 .Returns(Task.CompletedTask);
 
             _cadastrarVeiculovalidator = new();
 
-            _cadastrarVeiculoCommand = new CadastrarVeiculoCommand 
-            { 
-                Request = new CadastrarVeiculoRequest 
-                { 
+            _cadastrarVeiculoCommand = new CadastrarVeiculoCommand
+            {
+                Request = new CadastrarVeiculoRequest
+                {
                     Chassi = "1HGCM82633A004352",
                     Placa = "ABC1234",
                     TipoVeiculo = TipoVeiculo.Caminhao,
@@ -50,7 +50,18 @@ namespace Inlog.Desafio.Backend.Test
         {
             var response = await _cadastrarVeiculoHandler.Handle(_cadastrarVeiculoCommand, default);
 
-            response.Error.Should().BeNull(); 
+            response.Error.Should().BeNull();
+        }
+
+        [Test]
+        public async Task Deve_Retornar_Erro_De_Validacao()
+        {
+            _cadastrarVeiculoCommand.Request.Chassi = "chassiErrado";
+
+            var response = await _cadastrarVeiculoHandler.Handle(_cadastrarVeiculoCommand, default);
+
+            response.Error.Should().NotBeNull();
+            response.Error.Should().BeOfType<RequestValidationError>();
         }
 
     }

@@ -3,9 +3,9 @@ using Inlog.Desafio.Backend.Application.Commands;
 
 namespace Inlog.Desafio.Backend.Application.Validators
 {
-    public class CadastrarVeiculoCommandValidator : AbstractValidator<CadastrarVeiculoCommand>
+    public class CadastrarVeiculoRequestValidator : AbstractValidator<CadastrarVeiculoCommand>
     {
-        public CadastrarVeiculoCommandValidator()
+        public CadastrarVeiculoRequestValidator()
         {
             RuleFor(command => command.Request.TipoVeiculo) 
                 .IsInEnum().WithMessage("O tipo do veículo deve ter um valor válido (1 - Onibus, 2 - Caminhão");

@@ -21,5 +21,15 @@ namespace Inlog.Desafio.Backend.Infra.Database.Repositories
                 .SortByDescending(telemetria => telemetria.DataHora)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<TelemetriaEntity> ObterUltimaTelemetriaPorVeiculoIdAsync(string veiculoId)
+        {
+            var filter = Builders<TelemetriaEntity>.Filter.Eq(telemetria => telemetria.VeiculoId, veiculoId);
+
+            return await Collection
+                .Find(filter)
+                .SortByDescending(telemetria => telemetria.DataHora)
+                .FirstOrDefaultAsync();
+        }
     }
 }

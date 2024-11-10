@@ -19,7 +19,7 @@ builder.Services.AddScoped<IVeiculoRepository, VeiculoRepository>();
 builder.Services.AddScoped<ITelemetriaRepository, TelemetriaRepository>();
 builder.Services.AddScoped<ITelemetriaHistoricoRepository, TelemetriaHistoricoRepository>(); 
 
-builder.Services.AddValidatorsFromAssemblyContaining<CadastrarVeiculoCommandValidator>(); 
+builder.Services.AddValidatorsFromAssemblyContaining<CadastrarVeiculoRequestValidator>(); 
 
 var app = builder.Build();
 

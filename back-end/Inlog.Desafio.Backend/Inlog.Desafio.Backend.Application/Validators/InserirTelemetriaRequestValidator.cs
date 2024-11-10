@@ -4,9 +4,9 @@ using MongoDB.Bson;
 
 namespace Inlog.Desafio.Backend.Application.Validators
 {
-    public class InserirTelemetriaCommandValidator : AbstractValidator<InserirTelemetriaCommand>
+    public class InserirTelemetriaRequestValidator : AbstractValidator<InserirTelemetriaCommand>
     {
-        public InserirTelemetriaCommandValidator()
+        public InserirTelemetriaRequestValidator()
         {
             RuleFor(command => command.Request.VeiculoId)
                 .NotNull().NotEmpty().WithMessage("O Id do veículo é uma informação obrigatória.")

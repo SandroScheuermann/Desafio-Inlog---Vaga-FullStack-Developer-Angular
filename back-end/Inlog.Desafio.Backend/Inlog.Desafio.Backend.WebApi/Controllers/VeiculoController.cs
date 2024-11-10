@@ -64,7 +64,43 @@ public class VeiculoController(ILogger<VeiculoController> logger, IMediator medi
     {
         var query = new ListarVeiculosQuery();
 
-        var response = await _mediator.Send(query); 
+        var response = await _mediator.Send(query);
+
+        return response.Match(
+            Ok,
+            error => Problem(error.Message));
+    }
+
+    [HttpGet("ObterUltimaTelemetria/{veiculoId}")]
+    public async Task<IActionResult> ObterUltimaTelemetriaAsync(string veiculoId)
+    {
+        var query = new ObterUltimaTelemetriaQuery
+        { 
+            Request = new ObterUltimaTelemetriaRequest 
+            { 
+                VeiculoId = veiculoId
+            }
+        };
+
+        var response = await _mediator.Send(query);
+
+        return response.Match(
+            Ok,
+            error => Problem(error.Message));
+    }
+
+    [HttpGet("ObterTelemetriaCompleta/{veiculoId}")]
+    public async Task<IActionResult> ObterTelemetriaCompletaAsync(string veiculoId)
+    {
+        var query = new ObterTelemetriaCompletaQuery
+        {
+            Request = new ObterTelemetriaCompletaRequest
+            {
+                VeiculoId = veiculoId
+            }
+        };
+
+        var response = await _mediator.Send(query);
 
         return response.Match(
             Ok,
