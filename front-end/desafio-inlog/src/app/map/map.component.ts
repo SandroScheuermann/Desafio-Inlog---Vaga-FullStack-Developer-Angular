@@ -1,11 +1,13 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-polylinedecorator'
 import { VehicleService } from '../services/vehicle.service';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-map',
   standalone: true,
+  imports: [MatChipsModule],
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
@@ -17,8 +19,15 @@ export class MapComponent implements OnInit, OnChanges {
   private polylineDecorator: any = null;
 
   @Input() vehicleLocation: { lat: number, lng: number } | null = null;
-  @Input() mode: 'default' | 'historico' = 'historico';
   @Input() selectedVehicle: any | null = null;
+  @Output() mapClicked = new EventEmitter<{ latitude: number, longitude: number }>();
+
+  mode: 'default' | 'historico' = 'default';
+
+  modeOptions = [
+    { label: 'Última Localização', value: 'default' },
+    { label: 'Histórico', value: 'historico' }
+  ];
 
   constructor(private vehicleService: VehicleService) { }
 
@@ -37,19 +46,70 @@ export class MapComponent implements OnInit, OnChanges {
     }
   }
 
+  onModeSelect(selectedMode: 'default' | 'historico') {
+    this.mode = selectedMode;
+    console.log(`Modo selecionado: ${this.mode}`);
+  }
+
   private initMap(): void {
     this.map = L.map('map').setView([-27.5954, -48.5480], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '© OpenStreetMap'
     }).addTo(this.map);
+
+    this.map.on('click', (event: L.LeafletMouseEvent) => {
+      const { lat, lng } = event.latlng;
+      console.log(`Latitude: ${lat}, Longitude: ${lng}`);
+      this.mapClicked.emit({ latitude: lat, longitude: lng });
+    });
+
   }
 
   private loadMapData(): void {
-
-    if (this.selectedVehicle) {
+    if (this.mode === 'historico' && this.selectedVehicle) {
       this.loadHistoricalMode();
+    } else if (this.mode === 'default') {
+      this.loadLastLocations();
     }
+  }
+
+  private loadLastLocations(): void {
+    this.clearMarkers();
+    this.clearPolyline();
+
+    this.vehicleService.listarVeiculos().subscribe(response => {
+      console.log('Resposta da API para última localização dos veículos:', response);
+
+      if (Array.isArray(response.veiculos)) {
+        response.veiculos.forEach(vehicle => {
+          if (vehicle.ultimaTelemetria) { // Verifica se o veículo possui uma última telemetria
+            const { latitude, longitude } = vehicle.ultimaTelemetria;
+
+            const marker = L.circleMarker([latitude, longitude], {
+              radius: 8,
+              color: 'blue',
+              fillColor: 'white',
+              fillOpacity: 1
+            }).bindPopup(`
+          <div><strong>Veículo:</strong> ${vehicle.chassi}</div>
+          <div><strong>Placa:</strong> ${vehicle.placa}</div>
+          <div><strong>Latitude:</strong> ${latitude}</div>
+          <div><strong>Longitude:</strong> ${longitude}</div>
+          <div><strong>Data/Hora:</strong> ${new Date(vehicle.ultimaTelemetria.dataHora).toLocaleString()}</div>
+          `);
+
+            marker.addTo(this.map);
+            this.markers.push(marker);
+          }
+        });
+
+        const group = L.featureGroup(this.markers);
+        this.map.fitBounds(group.getBounds());
+      } else {
+        console.error("Erro: Nenhum veículo com telemetria encontrado ou resposta inesperada.", response);
+      }
+    });
   }
 
   private loadHistoricalMode(): void {

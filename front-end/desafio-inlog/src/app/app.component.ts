@@ -14,10 +14,18 @@ import { MapComponent } from './map/map.component';
 export class AppComponent {
   selectedVehicleLocation: { lat: number, lng: number } | null = null;
   selectedVehicle: any | null = null;
+  latitude: number | null = null;
+  longitude: number | null = null;
+
 
   onVehicleSelected(vehicle: any) {
     this.selectedVehicleLocation = vehicle.location;
     this.selectedVehicle = vehicle;
+  }
+
+  onMapClick(coords: { latitude: number, longitude: number }) {
+    this.latitude = coords.latitude;
+    this.longitude = coords.longitude;
   }
 }
 

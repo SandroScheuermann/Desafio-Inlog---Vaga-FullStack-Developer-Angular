@@ -26,8 +26,14 @@ export class VehiclesListComponent {
     this.loadVehicles();
 
     this.vehicleService.veiculoAdicionado$.subscribe(() => {
+      this.getUserLocation();
       this.loadVehicles();
-    })
+    });
+
+    this.vehicleService.telemetriaAdicionada$.subscribe(() => {
+      this.getUserLocation();
+      this.loadVehicles();
+    });
   }
 
   private getUserLocation(): void {

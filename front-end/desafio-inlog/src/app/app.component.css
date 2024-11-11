@@ -1,25 +1,27 @@
 .container {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 20px;
-}
-app-vehicle-telemetry {
-  width: 30%;
-  padding: 10px;
+  padding: 20px;
 }
 
-app-vehicle-form {
-  width: 30%;
-  padding: 10px;
+app-vehicle-form,
+app-vehicle-telemetry,
+app-vehicles-list {
+  width: 30%; /* Ajusta cada coluna para ocupar 30% da largura em telas grandes */
+  min-width: 250px; /* Define uma largura mínima para garantir que os componentes não fiquem muito pequenos */
+  padding: 20px;
+  background-color: #2e2e2e;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 app-map {
-  width: 100%;
+  width: 65%; /* O mapa ocupará o restante do espaço em telas grandes */
+  height: 600px; /* Altura fixa para o mapa */
   padding: 10px;
+  background-color: #2e2e2e;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-app-vehicles-list {
-  width: 30%;
-  padding: 10px;
-}
-

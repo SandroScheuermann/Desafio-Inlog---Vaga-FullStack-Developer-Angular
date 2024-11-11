@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { VehicleService } from '../services/vehicle.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -15,7 +15,9 @@ import { latitudeValidator, longitudeValidator } from '../validators/customvalid
   templateUrl: './vehicle-telemetry.component.html',
   styleUrl: './vehicle-telemetry.component.css'
 })
-export class VehicleTelemetryComponent {
+export class VehicleTelemetryComponent implements OnChanges {
+  @Input() latitude: number | null = null;
+  @Input() longitude: number | null = null;
   @Input() selectedVehicle: any | null = null;
 
   telemetryForm: FormGroup;
@@ -25,6 +27,17 @@ export class VehicleTelemetryComponent {
       latitude: ['', [Validators.required, latitudeValidator]],
       longitude: ['', [Validators.required, longitudeValidator]],
     });
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['latitude'] && changes['latitude'].currentValue !== undefined) {
+      this.telemetryForm.get('latitude')?.setValue(changes['latitude'].currentValue);
+    }
+    if (changes['longitude'] && changes['longitude'].currentValue !== undefined) {
+      this.telemetryForm.get('longitude')?.setValue(changes['longitude'].currentValue);
+    }
+
+    console.log('Latitude:', this.latitude);
+    console.log('Longitude:', this.longitude);
   }
 
   onSubmit() {
@@ -53,7 +66,6 @@ export class VehicleTelemetryComponent {
 
   private resetForm() {
     this.telemetryForm.reset();
-    this.selectedVehicle = null;
     this.telemetryForm.markAsPristine();
   }
 }
