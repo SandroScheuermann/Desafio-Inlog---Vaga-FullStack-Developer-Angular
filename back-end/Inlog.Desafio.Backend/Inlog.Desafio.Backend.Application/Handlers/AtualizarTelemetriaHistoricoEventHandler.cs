@@ -1,12 +1,11 @@
 ﻿using Inlog.Desafio.Backend.Application.Events;
-using Inlog.Desafio.Backend.Application.ResultHandling;
 using Inlog.Desafio.Backend.Domain.Models;
 using Inlog.Desafio.Backend.Domain.Repositories;
 using MediatR;
 
 namespace Inlog.Desafio.Backend.Application.Handlers
 {
-    public class AtualizarTelemetriaHistoricoEventHandler : IRequestHandler<AtualizarTelemetriaHistoricoEvent, Result<Task, Error>>
+    public class AtualizarTelemetriaHistoricoEventHandler : INotificationHandler<AtualizarTelemetriaHistoricoEvent>
     {
         public ITelemetriaRepository TelemetriaRepository { get; set; }
         public ITelemetriaHistoricoRepository TelemetriaHistoricoRepository { get; set; }
@@ -16,32 +15,27 @@ namespace Inlog.Desafio.Backend.Application.Handlers
             TelemetriaRepository = telemetriaRepository;
             TelemetriaHistoricoRepository = telemetriaHistoricoRepository;
         }
-        public async Task<Result<Task, Error>> Handle(AtualizarTelemetriaHistoricoEvent command, CancellationToken cancellationToken)
+
+        public async Task Handle(AtualizarTelemetriaHistoricoEvent notification, CancellationToken cancellationToken)
         {
-            var ultimaTelemetriaId = command.Request.UltimaTelemetriaId;
-            var veiculoId = command.Request.VeiculoId;
+            var telemetriaDesatualizada = await TelemetriaRepository.ObterTelemetriaDesatualizadaAsync(notification.Request.IdVeiculo);
 
-            var telemetriaDesatualizada = await TelemetriaRepository.ObterTelemetriaAnteriorAsync(veiculoId, ultimaTelemetriaId);
-
-            if (telemetriaDesatualizada is null)
-            {
-                return Task.CompletedTask;
+            if (telemetriaDesatualizada == null)
+            { 
+                return;
             }
 
-            var telemetriaHistorico = new TelemetriaHistoricoEntity
+            var telemetriaHistorico = new TelemetriaHistorico
             {
                 Id = telemetriaDesatualizada.Id,
-                VeiculoId = telemetriaDesatualizada.VeiculoId,
+                IdVeiculo = telemetriaDesatualizada.IdVeiculo,
                 Latitude = telemetriaDesatualizada.Latitude,
                 Longitude = telemetriaDesatualizada.Longitude,
                 DataHora = telemetriaDesatualizada.DataHora,
             };
 
-            await TelemetriaHistoricoRepository.InsertAsync(telemetriaHistorico);
-
-            await TelemetriaRepository.DeleteAsync(telemetriaDesatualizada.Id);
-
-            return Task.CompletedTask;
-        } 
+            await TelemetriaHistoricoRepository.InserirTelemetriaHistoricoAsync(telemetriaHistorico);
+            await TelemetriaRepository.DeletarTelemetriaPorId(telemetriaDesatualizada.Id);
+        }
     }
 }

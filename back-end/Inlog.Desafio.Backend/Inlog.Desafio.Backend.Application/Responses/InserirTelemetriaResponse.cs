@@ -2,7 +2,7 @@
 {
     public class InserirTelemetriaResponse
     {
-        public required string TelemetriaId { get; set; }
-        public required string VeiculoId { get; set; }
+        public required int IdTelemetria { get; set; }
+        public required int IdVeiculo { get; set; }
     }
 }

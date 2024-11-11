@@ -2,8 +2,9 @@
 
 namespace Inlog.Desafio.Backend.Domain.Repositories
 {
-    public interface ITelemetriaHistoricoRepository : IBaseRepository<TelemetriaHistoricoEntity>
+    public interface ITelemetriaHistoricoRepository
     {
-        public Task<IEnumerable<TelemetriaHistoricoEntity>> ObterHistoricoPorVeiculoId(string veiculoId);
+        public Task<IEnumerable<TelemetriaHistorico>> ObterHistoricoPorIdVeiculoAsync(int veiculoId); 
+        public Task<int> InserirTelemetriaHistoricoAsync(TelemetriaHistorico telemetriaHistorico);
     }
 }

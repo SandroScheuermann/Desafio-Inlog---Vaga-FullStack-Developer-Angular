@@ -40,15 +40,16 @@ namespace Inlog.Desafio.Backend.Application.Handlers
                 return new RequestValidationError(resultadoValidacao.Errors);
             }
 
-            return command;
-
+            return command;  
         }
 
         private Result<InserirTelemetriaCommand, Error> VerificarSeVeiculoExiste(InserirTelemetriaCommand command)
-        {  
-            var existeVeiculo = VeiculoRepository.CheckExistanceById(command.Request.VeiculoId).Result;
+        {
+            var idVeiculo = command.Request.IdVeiculo;
 
-            if(!existeVeiculo)
+            var veiculo = VeiculoRepository.ObterVeiculoPorId(idVeiculo).Result;
+
+            if (veiculo is null)
             {
                 return new VehicleNotFoundError();
             }
@@ -58,25 +59,23 @@ namespace Inlog.Desafio.Backend.Application.Handlers
 
         private Result<InserirTelemetriaResponse, Error> InserirTelemetria(InserirTelemetriaCommand command)
         {
-            var telemetria = new TelemetriaEntity
-            {
-                Id = string.Empty,
-                VeiculoId = command.Request.VeiculoId,
+            var telemetria = new Telemetria
+            { 
+                IdVeiculo = command.Request.IdVeiculo,
                 Latitude = command.Request.Latitude,
                 Longitude = command.Request.Longitude,
                 DataHora = DateTime.Now
             };
 
-            TelemetriaRepository.InsertAsync(telemetria);
-            
+            var idTelemetria = TelemetriaRepository.InserirTelemetriaAsync(telemetria).Result;
+
             var resposta = new InserirTelemetriaResponse
             {
-                TelemetriaId = telemetria.Id,
-                VeiculoId = telemetria.VeiculoId
-
+                IdTelemetria = idTelemetria,
+                IdVeiculo = telemetria.IdVeiculo 
             };
 
-            return resposta;
+            return resposta;  
         }
     }
 }

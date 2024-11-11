@@ -8,9 +8,8 @@ namespace Inlog.Desafio.Backend.Application.Validators
     {
         public InserirTelemetriaRequestValidator()
         {
-            RuleFor(command => command.Request.VeiculoId)
-                .NotNull().NotEmpty().WithMessage("O Id do veículo é uma informação obrigatória.")
-                .Must(id => ObjectId.TryParse(id, out _)).WithMessage("O Id do veículo deve ser um Id válido.");
+            RuleFor(command => command.Request.IdVeiculo)
+                .NotNull().NotEmpty().WithMessage("O Id do veículo é uma informação obrigatória."); 
 
             RuleFor(command => command.Request.Latitude)
                 .NotNull().NotEmpty().WithMessage("A latitude é uma informação obrigatória.")
@@ -18,7 +17,7 @@ namespace Inlog.Desafio.Backend.Application.Validators
 
             RuleFor(command => command.Request.Longitude)
                 .NotNull().NotEmpty().WithMessage("A longitude é uma informação obrigatória.")
-                .InclusiveBetween(-180, 180).WithMessage("A longitude deve estar entre -180 e 180."); 
+                .InclusiveBetween(-180, 180).WithMessage("A longitude deve estar entre -180 e 180.");
         } 
     }
 }

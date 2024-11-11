@@ -5,9 +5,9 @@ using MediatR;
 
 namespace Inlog.Desafio.Backend.Application.Queries
 {
-    public class ObterTelemetriaCompletaQuery : IRequest<Result<ObterTelemetriaCompletaResponse, Error>>
+    public class ObterHistoricoTelemetriaQuery : IRequest<Result<ObterHistoricoTelemetriaResponse, Error>>
     {
-        public required ObterTelemetriaCompletaRequest Request { get; set; }
+        public required ObterHistoricoTelemetriaRequest Request { get; set; }
 
     }
 }

@@ -6,7 +6,6 @@ using Inlog.Desafio.Backend.Application.ResultHandling.Errors;
 using Inlog.Desafio.Backend.Application.Validators;
 using Inlog.Desafio.Backend.Domain.Models;
 using Inlog.Desafio.Backend.Domain.Repositories;
-using MongoDB.Bson;
 using Moq;
 
 namespace Inlog.Desafio.Backend.Test
@@ -29,14 +28,16 @@ namespace Inlog.Desafio.Backend.Test
             _telemetriaRepository = new();
 
             _telemetriaRepository
-                .Setup(repo => repo.InsertAsync(It.IsAny<TelemetriaEntity>()))
-                .Returns(Task.CompletedTask);
+                .Setup(repo => repo.InserirTelemetriaAsync(It.IsAny<Telemetria>()))
+                .Returns(Task.FromResult(1));
 
             _veiculoRepository = new();
 
+            Veiculo fakeVeiculo = new() { Chassi = "", Cor = "", Placa = "", };
+
             _veiculoRepository
-                .Setup(repo => repo.CheckExistanceById(It.IsAny<string>()))
-                .Returns(Task.FromResult(true));
+                .Setup(repo => repo.ObterVeiculoPorId(It.IsAny<int>()))
+                .Returns(Task.FromResult(fakeVeiculo)!);
 
             _inserirTelemetriaValidator = new();
 
@@ -44,7 +45,7 @@ namespace Inlog.Desafio.Backend.Test
             {
                 Request = new InserirTelemetriaRequest
                 {
-                    VeiculoId = ObjectId.GenerateNewId().ToString(),
+                    IdVeiculo = 1,
                     Latitude = -30.593100d,
                     Longitude = -55.548000d,
                     DataHora = DateTime.Now
@@ -76,9 +77,11 @@ namespace Inlog.Desafio.Backend.Test
         [Test]
         public async Task Deve_Retornar_Erro_Veiculo_Nao_Encontrado()
         {
+            Veiculo? nullVeiculo = null;
+
             _veiculoRepository
-                .Setup(repo => repo.CheckExistanceById(It.IsAny<string>()))
-                .Returns(Task.FromResult(false));
+                .Setup(repo => repo.ObterVeiculoPorId(It.IsAny<int>()))
+                .Returns(Task.FromResult(nullVeiculo));
 
             var response = await _inserirTelemetriaHandler.Handle(_inserirTelemetriaCommand, default);
 

@@ -1,6 +1,7 @@
 ﻿using Inlog.Desafio.Backend.Application.Queries;
 using Inlog.Desafio.Backend.Application.Responses;
 using Inlog.Desafio.Backend.Application.ResultHandling;
+using Inlog.Desafio.Backend.Application.ResultHandling.Errors;
 using Inlog.Desafio.Backend.Domain.Repositories;
 using MediatR;
 
@@ -23,9 +24,9 @@ namespace Inlog.Desafio.Backend.Application.Handlers
         }  
         private async Task<Result<ObterUltimaTelemetriaResponse, Error>> ObterUltimaTelemetria(ObterUltimaTelemetriaQuery query)
         {
-            var veiculoId = query.Request.VeiculoId;
+            var idVeiculo = query.Request.IdVeiculo;
 
-            var result = await TelemetriaRepository.ObterUltimaTelemetriaPorVeiculoIdAsync(veiculoId);
+            var result = await TelemetriaRepository.ObterUltimaTelemetriaPorVeiculoIdAsync(idVeiculo);
 
             var resposta = new ObterUltimaTelemetriaResponse
             {

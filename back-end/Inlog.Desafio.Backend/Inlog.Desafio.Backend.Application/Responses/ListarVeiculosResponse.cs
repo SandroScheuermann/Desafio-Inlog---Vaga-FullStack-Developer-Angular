@@ -4,6 +4,6 @@ namespace Inlog.Desafio.Backend.Application.Responses
 {
     public class ListarVeiculosResponse
     {
-        public IEnumerable<VeiculoEntity>? Veiculos { get; set; }
+        public required IEnumerable<Veiculo> Veiculos { get; set; } 
     }
 }

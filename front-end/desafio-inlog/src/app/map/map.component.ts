@@ -38,7 +38,6 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   private initMap(): void {
-    this.map = L.map('map').setView([-27.5954, -48.5480], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '© OpenStreetMap'

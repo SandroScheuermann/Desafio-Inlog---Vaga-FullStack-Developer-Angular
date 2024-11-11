@@ -26,8 +26,8 @@ namespace Inlog.Desafio.Backend.Test
             _veiculoRepository = new();
 
             _veiculoRepository
-                .Setup(repo => repo.InsertAsync(It.IsAny<VeiculoEntity>()))
-                .Returns(Task.CompletedTask);
+                .Setup(repo => repo.InserirVeiculoAsync(It.IsAny<Veiculo>()))
+                .Returns(Task.FromResult(1));
 
             _cadastrarVeiculovalidator = new();
 

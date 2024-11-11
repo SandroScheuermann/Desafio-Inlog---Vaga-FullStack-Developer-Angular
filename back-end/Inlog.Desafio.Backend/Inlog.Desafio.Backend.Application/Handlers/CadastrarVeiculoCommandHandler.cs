@@ -42,16 +42,15 @@ namespace Inlog.Desafio.Backend.Application.Handlers
 
         private Result<CadastrarVeiculoResponse, Error> CadastrarVeiculo(CadastrarVeiculoCommand command)
         {
-            var veiculo = new VeiculoEntity
-            {
-                Id = string.Empty,
+            var veiculo = new Veiculo
+            { 
                 Chassi = command.Request.Chassi,
                 TipoVeiculo = command.Request.TipoVeiculo,
                 Cor = command.Request.Cor,
-                Placa = command.Request.Placa,
+                Placa = command.Request.Placa, 
             };
 
-            Repository.InsertAsync(veiculo);
+            veiculo.Id = Repository.InserirVeiculoAsync(veiculo).Result;
               
             var resposta = new CadastrarVeiculoResponse 
             {

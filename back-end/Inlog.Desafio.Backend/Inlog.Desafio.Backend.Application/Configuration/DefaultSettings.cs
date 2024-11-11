@@ -2,7 +2,6 @@
 {
     public class DefaultSettings
     {
-        public required string ConnectionString { get; set; }
-        public required string DatabaseName { get; set; }
+        public string? DefaultConnection { get; set; }
     }
 }

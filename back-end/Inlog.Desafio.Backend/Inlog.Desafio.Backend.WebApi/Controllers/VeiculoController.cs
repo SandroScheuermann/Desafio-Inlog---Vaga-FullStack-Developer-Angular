@@ -26,7 +26,7 @@ public class VeiculoController(ILogger<VeiculoController> logger, IMediator medi
             Ok,
             error => error switch
             {
-                RequestValidationError => BadRequest(error.Message), 
+                RequestValidationError => BadRequest(error.Message),
                 _ => Problem(error.Message)
             });
     }
@@ -41,13 +41,13 @@ public class VeiculoController(ILogger<VeiculoController> logger, IMediator medi
         return response.Match(
             success =>
             {
-                _mediator.Send(new AtualizarTelemetriaHistoricoEvent 
-                { 
+                _mediator.Publish(new AtualizarTelemetriaHistoricoEvent
+                {
                     Request = new AtualizarTelemetriaHistoricoRequest
-                    { 
-                        UltimaTelemetriaId = success.TelemetriaId,
-                        VeiculoId = success.VeiculoId,
-                    } 
+                    {
+                        IdUltimaTelemetria = success.IdTelemetria,
+                        IdVeiculo = success.IdVeiculo,
+                    }
                 });
 
                 return Ok(success);
@@ -70,34 +70,16 @@ public class VeiculoController(ILogger<VeiculoController> logger, IMediator medi
         return response.Match(
             Ok,
             error => Problem(error.Message));
-    }
+    } 
 
-    [HttpGet("ObterUltimaTelemetria/{veiculoId}")]
-    public async Task<IActionResult> ObterUltimaTelemetriaAsync(string veiculoId)
+    [HttpGet("ObterHistoricoTelemetria/{idVeiculo}")]
+    public async Task<IActionResult> ObterHistoricoTelemetriaAsync(int idVeiculo)
     {
-        var query = new ObterUltimaTelemetriaQuery
-        { 
-            Request = new ObterUltimaTelemetriaRequest 
-            { 
-                VeiculoId = veiculoId
-            }
-        };
-
-        var response = await _mediator.Send(query);
-
-        return response.Match(
-            Ok,
-            error => Problem(error.Message));
-    }
-
-    [HttpGet("ObterTelemetriaCompleta/{veiculoId}")]
-    public async Task<IActionResult> ObterTelemetriaCompletaAsync(string veiculoId)
-    {
-        var query = new ObterTelemetriaCompletaQuery
+        var query = new ObterHistoricoTelemetriaQuery
         {
-            Request = new ObterTelemetriaCompletaRequest
+            Request = new ObterHistoricoTelemetriaRequest
             {
-                VeiculoId = veiculoId
+                IdVeiculo = idVeiculo
             }
         };
 
@@ -105,7 +87,7 @@ public class VeiculoController(ILogger<VeiculoController> logger, IMediator medi
 
         return response.Match(
             Ok,
-            error => Problem(error.Message));
+            error => Problem(error.Message)); 
     }
 }
 

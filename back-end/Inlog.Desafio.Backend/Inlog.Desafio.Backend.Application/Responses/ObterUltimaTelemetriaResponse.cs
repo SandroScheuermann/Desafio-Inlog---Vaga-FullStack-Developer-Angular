@@ -4,6 +4,6 @@ namespace Inlog.Desafio.Backend.Application.Responses
 {
     public class ObterUltimaTelemetriaResponse
     {
-        public TelemetriaEntity? Telemetria { get; set; }
+        public Telemetria? Telemetria { get; set; }
     }
 }
