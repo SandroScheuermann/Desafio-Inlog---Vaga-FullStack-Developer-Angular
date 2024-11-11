@@ -1,17 +1,17 @@
 .main-container {
   display: flex;
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: flex-start; /* Alinha os elementos ao topo */
-  height: 100vh; /* Altura total da viewport */
-  gap: 20px; /* Espaço entre o mapa e o content-container */
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  gap: 20px;
   padding: 25px;
   box-sizing: border-box;
 }
 
 .content-container, app-map {
-  width: 50%; /* Divide igualmente entre os dois lados */
-  max-width: 850px; /* Define uma largura máxima */
-  height: 100%; /* Garante que ambos ocupem a altura total da main-container */
+  width: 50%;
+  max-width: 850px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;

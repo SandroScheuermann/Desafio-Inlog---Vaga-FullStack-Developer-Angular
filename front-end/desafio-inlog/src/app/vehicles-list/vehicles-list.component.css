@@ -1,10 +1,10 @@
 .table-container {
-  max-height: 810px; /* Altura fixa para o grid */
-  overflow-y: auto; /* Barra de rolagem vertical */
+  max-height: 810px;
+  overflow-y: auto;
 }
 
 .mat-table {
-  width: 100%; /* Garante que a tabela ocupe toda a largura do container */
+  width: 100%;
 }
 
 .mat-mdc-row:hover {
@@ -15,7 +15,7 @@
 }
 
 .selected {
-  background-color: var(--mat-table-row-item-outline-color); /* Cor de fundo da linha selecionada */
-  color: var(--mat-primary-contrast); /* Cor do texto da linha selecionada */
+  background-color: var(--mat-table-row-item-outline-color);
+  color: var(--mat-primary-contrast);
   transition: background-color 0.2s ease-in-out;
 }

@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 100%; /* Aumente conforme necessário */
+  max-width: 100%;
   margin: 0 auto;
   padding: 5px;
   border-radius: 8px;
@@ -11,34 +11,33 @@
 
 .input-row {
   display: flex;
-  gap: 15px; /* Espaço entre os campos */
+  gap: 15px;
   width: 100%;
 }
 
 .form-field {
-  flex-grow: 1; /* Permite que os campos cresçam igualmente */
-  min-width: 100px; /* Define uma largura mínima para os campos */
+  flex-grow: 1;
+  min-width: 100px;
 }
 
 .form-field.latitude {
-  flex-basis: 10%; /* Define largura inicial do campo Latitude */
+  flex-basis: 10%;
 }
 
 .form-field.longitude {
-  flex-basis: 10%; /* Define largura inicial do campo Longitude */
+  flex-basis: 10%;
 }
 
 .form-field.vehicle-plate {
-  flex-basis: 10%; /* Define largura inicial do campo de Placa */
+  flex-basis: 10%;
 
 }.button-container {
   display: flex;
-  justify-content: center;
-  width: 100%;
+  justify-content: centerf width: 100%;
   margin-top: 15px;
 }
 
 button {
-  width: 100px; /* Ajuste a largura conforme necessário */
+  width: 100px;
 }
 
