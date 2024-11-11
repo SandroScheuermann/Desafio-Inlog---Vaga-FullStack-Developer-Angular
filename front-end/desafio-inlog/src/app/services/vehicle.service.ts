@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable, Subject, tap} from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject, tap } from 'rxjs';
 
 interface Vehicle {
   id: number;
@@ -76,7 +76,7 @@ export class VehicleService {
     return this.http.get<TipoVeiculo[]>(`${this.apiUrl}/TiposVeiculo`);
   }
 
-  obterTipoVeiculoOptions(): Observable<TipoVeiculo[]> {
+  public obterTipoVeiculoOptions(): Observable<TipoVeiculo[]> {
     return this.obterTipoVeiculo().pipe(
       map((tipoVeiculos: TipoVeiculo[]) =>
         tipoVeiculos.map((tipo: TipoVeiculo) => ({

@@ -15,7 +15,12 @@ describe('VehicleFormComponent', () => {
   let vehicleServiceSpy: jasmine.SpyObj<VehicleService>;
 
   beforeEach(async () => {
-    const spy = jasmine.createSpyObj('VehicleService', ['cadastrarVeiculo']);
+    const spy = jasmine.createSpyObj('VehicleService', ['cadastrarVeiculo', 'obterTipoVeiculoOptions']);
+
+    spy.obterTipoVeiculoOptions.and.returnValue(of([
+      { value: 1, label: 'Carro' },
+      { value: 2, label: 'Moto' }
+    ]));
 
     await TestBed.configureTestingModule({
       imports: [
@@ -93,3 +98,4 @@ describe('VehicleFormComponent', () => {
     expect(vehicleServiceSpy.cadastrarVeiculo).not.toHaveBeenCalled();
   });
 });
+

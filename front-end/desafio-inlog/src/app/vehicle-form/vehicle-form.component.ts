@@ -6,16 +6,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
+import { MatOptionModule } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-vehicle-form',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule, MatToolbarModule, CommonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule, MatToolbarModule, CommonModule, MatFormFieldModule, MatOptionModule, MatAutocompleteModule, MatSelectModule],
   templateUrl: './vehicle-form.component.html',
   styleUrls: ['./vehicle-form.component.css']
 })
 export class VehicleFormComponent {
   vehicleForm: FormGroup;
+  tiposVeiculo: any[] = [];
 
   constructor(private vehicleService: VehicleService, private fb: FormBuilder) {
     this.vehicleForm = this.fb.group({
@@ -49,4 +53,11 @@ export class VehicleFormComponent {
     this.vehicleForm.reset();
     this.vehicleForm.markAsPristine();
   }
+
+  ngOnInit(): void {
+    this.vehicleService.obterTipoVeiculoOptions().subscribe((tipos: any[]) => {
+      this.tiposVeiculo = tipos;
+    });
+  }
+
 }

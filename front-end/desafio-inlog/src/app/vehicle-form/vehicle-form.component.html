@@ -31,13 +31,17 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="form-field" appearance="fill">
-      <mat-label>Tipo de Veículo</mat-label>
-      <input matInput formControlName="tipoVeiculo" type="number" placeholder="Digite o tipo de veículo">
-      <mat-error *ngIf="vehicleForm.get('tipoVeiculo')?.hasError('required')">
-        O campo Tipo de Veículo é obrigatório.
-      </mat-error>
-    </mat-form-field>
+<mat-form-field class="form-field" appearance="fill">
+  <mat-label>Tipo de Veículo</mat-label>
+  <mat-select formControlName="tipoVeiculo" placeholder="Tipo de Veículo">
+    <mat-option *ngFor="let tipo of tiposVeiculo" [value]="tipo.value">
+      {{ tipo.label }}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="vehicleForm.get('tipoVeiculo')?.hasError('required')">
+    O campo Tipo de Veículo é obrigatório.
+  </mat-error>
+</mat-form-field>
 
     <mat-form-field class="form-field" appearance="fill">
       <mat-label>Cor</mat-label>
