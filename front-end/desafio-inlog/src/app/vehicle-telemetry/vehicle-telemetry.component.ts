@@ -16,9 +16,9 @@ import { latitudeValidator, longitudeValidator } from '../validators/customvalid
   styleUrl: './vehicle-telemetry.component.css'
 })
 export class VehicleTelemetryComponent implements OnChanges {
-  @Input() latitude: number | null = null;
-  @Input() longitude: number | null = null;
-  @Input() selectedVehicle: any | null = null;
+  latitude: number | null = null;
+  longitude: number | null = null;
+  selectedVehicle: any | null = null;
 
   telemetryForm: FormGroup;
 
@@ -28,6 +28,7 @@ export class VehicleTelemetryComponent implements OnChanges {
       longitude: ['', [Validators.required, longitudeValidator]],
     });
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['latitude'] && changes['latitude'].currentValue !== undefined) {
       this.telemetryForm.get('latitude')?.setValue(changes['latitude'].currentValue);
@@ -39,6 +40,27 @@ export class VehicleTelemetryComponent implements OnChanges {
     console.log('Latitude:', this.latitude);
     console.log('Longitude:', this.longitude);
   }
+
+  ngOnInit() {
+    this.vehicleService.localizacaoAtualizada$.subscribe(location => {
+      if (location) {
+        this.telemetryForm.patchValue({
+          latitude: location.latitude ?? null,
+          longitude: location.longitude ?? null
+        });
+      } else {
+        this.telemetryForm.patchValue({
+          latitude: null,
+          longitude: null
+        });
+      }
+    });
+
+    this.vehicleService.veiculoSelecionado$.subscribe(vehicle => {
+      this.selectedVehicle = vehicle;
+    });
+  }
+
 
   onSubmit() {
 

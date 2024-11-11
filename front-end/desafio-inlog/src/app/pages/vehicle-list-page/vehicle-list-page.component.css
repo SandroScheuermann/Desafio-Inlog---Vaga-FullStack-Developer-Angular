@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.vehicle-list {
+  flex-grow: 0; /* Remove o crescimento automático */
+  align-self: stretch;
+  height: 600px; /* Define uma altura fixa para o grid */
+  overflow-y: auto; /* Adiciona rolagem vertical, se necessário */
+  border-radius: 3px; /* Define bordas curvas */
+  background-color: #101414; /* Cor de fundo do grid */
+  padding: 10px; /* Espaçamento interno, ajuste conforme necessário */
+  box-sizing: border-box; /* Inclui o padding na largura total */
+}
+
+.telemetry-form {
+  align-self: center; /* Centraliza o formulário horizontalmente, se desejado */
+  width: 100%; /* Define uma largura padrão para o formulário */
+  max-width: 400px; /* Define uma largura máxima para o formulário */
+}
+

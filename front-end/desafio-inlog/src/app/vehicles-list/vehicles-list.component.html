@@ -22,7 +22,7 @@
     </ng-container>
 
     <ng-container matColumnDef="distancia">
-      <th mat-header-cell *matHeaderCellDef> Distância (m) </th>
+      <th mat-header-cell *matHeaderCellDef> Distância do usuário (m) </th>
       <td mat-cell *matCellDef="let vehicle">
         <span *ngIf="vehicle.distance !== null && vehicle.distance !== undefined">{{ vehicle.distance | number }} m</span>
       </td>
@@ -30,7 +30,7 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-        (click)="selectVehicle(row)"
+        (click)="onVehicleSelected(row)"
         [class.selected]="row === selectedVehicle"></tr>
   </table>
 </div>

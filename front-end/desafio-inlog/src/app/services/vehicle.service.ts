@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject, tap} from 'rxjs';
 
 interface Vehicle {
   id: number;
@@ -40,9 +40,13 @@ export class VehicleService {
 
   private veiculoAdicionadoSource = new Subject<void>();
   private telemetriaAdicionadaSource = new Subject<void>();
+  private localizacaoSource = new BehaviorSubject<{ latitude: number; longitude: number } | null>(null);
+  private veiculoSelecionadoSource = new BehaviorSubject<Vehicle | null>(null);
 
+  veiculoSelecionado$ = this.veiculoSelecionadoSource.asObservable();
   veiculoAdicionado$ = this.veiculoAdicionadoSource.asObservable();
   telemetriaAdicionada$ = this.telemetriaAdicionadaSource.asObservable();
+  localizacaoAtualizada$ = this.localizacaoSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -81,6 +85,14 @@ export class VehicleService {
         }))
       )
     );
+  }
+
+  selecionarVeiculo(vehicle: Vehicle) {
+    this.veiculoSelecionadoSource.next(vehicle);
+  }
+
+  atualizarLocalizacao(latitude: number, longitude: number) {
+    this.localizacaoSource.next({ latitude, longitude });
   }
 
 }

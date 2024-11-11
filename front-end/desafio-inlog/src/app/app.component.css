@@ -1,27 +1,33 @@
-.container {
+.main-container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: flex-start; /* Alinha os elementos ao topo */
+  height: 100vh; /* Altura total da viewport */
+  gap: 20px; /* Espaço entre o mapa e o content-container */
+  padding: 25px;
+  box-sizing: border-box;
+}
+
+.content-container, app-map {
+  width: 50%; /* Divide igualmente entre os dois lados */
+  max-width: 850px; /* Define uma largura máxima */
+  height: 100%; /* Garante que ambos ocupem a altura total da main-container */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
   padding: 20px;
 }
 
-app-vehicle-form,
-app-vehicle-telemetry,
-app-vehicles-list {
-  width: 30%; /* Ajusta cada coluna para ocupar 30% da largura em telas grandes */
-  min-width: 250px; /* Define uma largura mínima para garantir que os componentes não fiquem muito pequenos */
-  padding: 20px;
-  background-color: #2e2e2e;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.vehicle-chip-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10px;
 }
 
-app-map {
-  width: 64%; /* O mapa ocupará o restante do espaço em telas grandes */
-  height: 600px; /* Altura fixa para o mapa */
-  padding: 10px;
-  background-color: #2e2e2e;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+mat-chip {
+  font-size: 1.2rem;
+  height: 40px;
+  padding: 0 16px;
 }
+

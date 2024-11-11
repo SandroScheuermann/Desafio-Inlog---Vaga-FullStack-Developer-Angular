@@ -1,15 +1,16 @@
-<div class="container">
-  <app-map [mode]="mode" [selectedVehicle]="selectedVehicle" (mapClicked)="onMapClick($event)"></app-map>
+<div class="vehicle-chip-container">
+  <mat-chip-set aria-label="Page selection">
+    <mat-chip (click)="navigateTo('/cadastrar')">Cadastrar Veículos</mat-chip>
+    <mat-chip (click)="navigateTo('/listar')">Listar Veículos</mat-chip>
+  </mat-chip-set>
+</div>
 
-  <app-vehicles-list (vehicleSelected)="onVehicleSelected($event)"></app-vehicles-list>
+<div class="main-container">
+  <div class="content-container">
+    <router-outlet></router-outlet>
+  </div>
 
-  <app-vehicle-form></app-vehicle-form>
-
-  <app-vehicle-telemetry
-    [selectedVehicle]="selectedVehicle"
-    [latitude]="latitude"
-    [longitude]="longitude">
-  </app-vehicle-telemetry>
+  <app-map></app-map>
 
 </div>
 

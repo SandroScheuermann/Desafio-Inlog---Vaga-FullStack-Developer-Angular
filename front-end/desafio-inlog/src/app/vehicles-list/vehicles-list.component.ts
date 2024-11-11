@@ -116,9 +116,8 @@ export class VehiclesListComponent {
     return degrees * (Math.PI / 180);
   }
 
-  selectVehicle(vehicle: any) {
-    this.selectedVehicle = vehicle;
-    this.vehicleSelected.emit(vehicle);
+  onVehicleSelected(vehicle: any) {
+    this.vehicleService.selecionarVeiculo(vehicle);
   }
 
   getTipoVeiculoLabel(tipo: number): string {

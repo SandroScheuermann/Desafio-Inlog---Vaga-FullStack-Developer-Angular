@@ -1,4 +1,7 @@
-html, body { height: 100%; }
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
 
 body {
   background-color: #3f4948; /* Substitua pelo código de cor da imagem */

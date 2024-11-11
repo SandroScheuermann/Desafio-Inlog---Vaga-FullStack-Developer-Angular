@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-polylinedecorator'
 import { VehicleService } from '../services/vehicle.service';
@@ -13,16 +13,13 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit, OnChanges {
-  private map: any;
+  public map: any;
   private markers: L.CircleMarker[] = [];
   private polyline: L.Polyline | null = null;
   private polylineBorder: L.Polyline | null = null;
   private polylineDecorator: any = null;
-
-  @Input() vehicleLocation: { lat: number, lng: number } | null = null;
-  @Input() selectedVehicle: any | null = null;
-  @Input() mode: 'default' | 'historico' = 'historico';
-  @Output() mapClicked = new EventEmitter<{ latitude: number, longitude: number }>();
+  selectedVehicle: any | null = null;
+  mode: 'default' | 'historico' = 'historico';
 
   constructor(private vehicleService: VehicleService) { }
 
@@ -31,6 +28,11 @@ export class MapComponent implements OnInit, OnChanges {
     this.loadMapData();
 
     this.vehicleService.telemetriaAdicionada$.subscribe(() => {
+      this.loadMapData();
+    });
+
+    this.vehicleService.veiculoSelecionado$.subscribe(vehicle => {
+      this.selectedVehicle = vehicle;
       this.loadMapData();
     });
   }
@@ -56,12 +58,12 @@ export class MapComponent implements OnInit, OnChanges {
     this.map.on('click', (event: L.LeafletMouseEvent) => {
       const { lat, lng } = event.latlng;
       console.log(`Latitude: ${lat}, Longitude: ${lng}`);
-      this.mapClicked.emit({ latitude: lat, longitude: lng });
+      this.vehicleService.atualizarLocalizacao(lat, lng);
     });
 
   }
 
-  protected loadMapData(): void {
+  public loadMapData(): void {
     if (this.mode === 'historico' && this.selectedVehicle) {
       this.loadHistoricalMode();
     } else if (this.mode === 'default') {
@@ -69,7 +71,7 @@ export class MapComponent implements OnInit, OnChanges {
     }
   }
 
-  private loadLastLocations(): void {
+  public loadLastLocations(): void {
     this.clearMarkers();
     this.clearPolyline();
 
@@ -78,7 +80,7 @@ export class MapComponent implements OnInit, OnChanges {
 
       if (Array.isArray(response.veiculos)) {
         response.veiculos.forEach(vehicle => {
-          if (vehicle.ultimaTelemetria) { // Verifica se o veículo possui uma última telemetria
+          if (vehicle.ultimaTelemetria) {
             const { latitude, longitude } = vehicle.ultimaTelemetria;
 
             const marker = L.circleMarker([latitude, longitude], {
@@ -107,7 +109,7 @@ export class MapComponent implements OnInit, OnChanges {
     });
   }
 
-  private loadHistoricalMode(): void {
+  public loadHistoricalMode(): void {
     this.clearMarkers();
     this.clearPolyline();
 
