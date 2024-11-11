@@ -32,7 +32,7 @@ export class VehicleTelemetryComponent {
     if (this.selectedVehicle && this.telemetryForm.valid) {
       const telemetryData = {
         ...this.telemetryForm.value,
-        veiculoId: this.selectedVehicle.id,
+        idVeiculo: this.selectedVehicle.id,
         datahora: new Date()
       };
 

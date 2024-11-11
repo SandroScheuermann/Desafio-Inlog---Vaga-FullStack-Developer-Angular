@@ -38,6 +38,7 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   private initMap(): void {
+    this.map = L.map('map').setView([-27.5954, -48.5480], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '© OpenStreetMap'
@@ -63,16 +64,11 @@ export class MapComponent implements OnInit, OnChanges {
       if (Array.isArray(response.historicoPosicao)) {
         const latLngs = response.historicoPosicao.map(point => L.latLng(point.latitude, point.longitude));
 
-        if (response.ultimaPosicao) {
-          latLngs.push(L.latLng(response.ultimaPosicao.latitude, response.ultimaPosicao.longitude));
-        }
-
         this.polylineBorder = L.polyline(latLngs, { color: 'darkgrey', weight: 17 }).addTo(this.map);
         this.polyline = L.polyline(latLngs, { color: 'blue', weight: 10 }).addTo(this.map);
 
         this.map.fitBounds(this.polyline.getBounds());
 
-        //bolinhas
         response.historicoPosicao.forEach((point) => {
           const positionsMarkers = L.circleMarker([point.latitude, point.longitude], {
             radius: 8,
@@ -86,21 +82,6 @@ export class MapComponent implements OnInit, OnChanges {
           positionsMarkers.addTo(this.map);
           this.markers.push(positionsMarkers);
         });
-
-        if (response.ultimaPosicao) {
-          const lastPositionMarker = L.circleMarker([response.ultimaPosicao.latitude, response.ultimaPosicao.longitude], {
-            radius: 8,
-            color: 'black',
-            fillColor: 'yellow',
-            fillOpacity: 1
-          }).bindPopup(`
-          <div><strong>Última Posição</strong></div>
-          <div><strong>Data/Hora:</strong> ${new Date(response.ultimaPosicao.dataHora).toLocaleString()}</div>
-          <div><strong>Latitude:</strong> ${response.ultimaPosicao.latitude}</div>
-          <div><strong>Longitude:</strong> ${response.ultimaPosicao.longitude}</div>`);
-          lastPositionMarker.addTo(this.map);
-          this.markers.push(lastPositionMarker);
-        }
 
         //setas
         this.polylineDecorator = L.polylineDecorator(this.polyline, {

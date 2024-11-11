@@ -43,7 +43,7 @@ namespace Inlog.Desafio.Backend.Infra.Database.Repositories
             t.Id AS IdTelemetria,
             t.*
             FROM Veiculos v 
-            RIGHT JOIN Telemetrias t ON t.IdVeiculo = v.Id";
+            LEFT JOIN Telemetrias t ON t.IdVeiculo = v.Id";
 
             using var connection = new SqlConnection(_connectionString);
 

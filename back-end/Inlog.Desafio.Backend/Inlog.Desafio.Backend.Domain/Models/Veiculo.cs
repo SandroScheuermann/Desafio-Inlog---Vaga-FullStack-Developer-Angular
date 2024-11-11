@@ -1,4 +1,4 @@
-﻿namespace Inlog.Desafio.Backend.Domain.Models;
+﻿namespace Inlog.Desafio.Backend.Domain.Models; 
 
 public class Veiculo
 {
@@ -8,4 +8,4 @@ public class Veiculo
     public TipoVeiculo TipoVeiculo { get; set; }
     public required string Cor { get; set; } 
     public Telemetria? UltimaTelemetria { get; set; }
-}
+} 

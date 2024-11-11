@@ -25,6 +25,16 @@
       <td mat-cell *matCellDef="let vehicle"> {{ vehicle.cor }} </td>
     </ng-container>
 
+    <!-- Coluna Distância -->
+    <ng-container matColumnDef="distancia">
+      <th mat-header-cell *matHeaderCellDef> Distância (m) </th>
+      <td mat-cell *matCellDef="let vehicle">
+        <!-- Exibe a distância apenas se `vehicle.distance` for válido e diferente de null ou undefined -->
+        <span *ngIf="vehicle.distance !== null && vehicle.distance !== undefined">{{ vehicle.distance | number }} m</span>
+      </td>
+    </ng-container>
+
+
     <!-- Header e Rows -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"

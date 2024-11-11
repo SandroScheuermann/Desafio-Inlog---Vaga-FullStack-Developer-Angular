@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
 
 interface Vehicle {
-  id: string;
+  id: number;
   chassi: string;
   placa: string;
   tipoVeiculo: number;
   cor: string;
+  ultimaTelemetria : Telemetry;
 }
 
 interface ListarVeiculoResponse {
@@ -18,11 +19,10 @@ interface Telemetry {
   latitude: number;
   longitude: number;
   dataHora: Date;
-  veiculoId: string;
+  idVeiculo: number;
 }
 
 interface HistoricoTelemetria {
-  ultimaPosicao: Telemetry;
   historicoPosicao: Telemetry[];
 }
 
@@ -60,7 +60,7 @@ export class VehicleService {
   }
 
   obterHistoricoTelemetria(veiculoId: string): Observable<HistoricoTelemetria> {
-    return this.http.get<HistoricoTelemetria>(`${this.apiUrl}/ObterTelemetriaCompleta/${veiculoId}`);
+    return this.http.get<HistoricoTelemetria>(`${this.apiUrl}/ObterHistoricoTelemetria/${veiculoId}`);
   }
 
 

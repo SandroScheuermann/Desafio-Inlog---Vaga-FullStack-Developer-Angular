@@ -25,11 +25,11 @@ namespace Inlog.Desafio.Backend.Application.Handlers
         }
         private async Task<Result<ListarVeiculosResponse, Error>> ObterListagemDeVeiculos()
         {
-            var veiculos = await Repository.ObterVeiculos();
+            var veiculos = await Repository.ObterVeiculos(); 
 
             var resposta = new ListarVeiculosResponse { Veiculos = veiculos }; 
              
             return resposta;
-        }
+        }  
     }
 }
