@@ -45,7 +45,8 @@ public class VeiculoController(ILogger<VeiculoController> logger, IMediator medi
                 { 
                     Request = new AtualizarTelemetriaHistoricoRequest
                     { 
-                        IdUltimaTelemetria = success.Id
+                        UltimaTelemetriaId = success.TelemetriaId,
+                        VeiculoId = success.VeiculoId,
                     } 
                 });
 

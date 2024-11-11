@@ -1,0 +1,10 @@
+<div class="container">
+  <app-vehicle-form></app-vehicle-form>
+
+  <app-vehicle-telemetry [selectedVehicle]="selectedVehicle"></app-vehicle-telemetry>
+
+  <app-vehicles-list (vehicleSelected)="onVehicleSelected($event)"></app-vehicles-list>
+
+  <app-map [selectedVehicle]="selectedVehicle"></app-map>
+</div>
+

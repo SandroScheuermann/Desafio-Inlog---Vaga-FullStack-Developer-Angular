@@ -1,0 +1,9 @@
+html, body { height: 100%; }
+
+body {
+  background-color: #3f4948; /* Substitua pelo código de cor da imagem */
+  color: #ffffff; /* Ajusta a cor do texto para branco para contraste */
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-seriff
+}

@@ -17,7 +17,7 @@ namespace Inlog.Desafio.Backend.Infra.Database.Repositories
 
             return await Collection
                 .Find(filter)
-                .SortByDescending(telemetria => telemetria.DataHora)
+                .SortBy(telemetria => telemetria.DataHora)
                 .ToListAsync();
         }
     }

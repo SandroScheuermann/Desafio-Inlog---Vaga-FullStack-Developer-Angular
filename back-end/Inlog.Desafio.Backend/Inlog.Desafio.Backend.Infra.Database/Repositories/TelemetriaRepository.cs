@@ -12,10 +12,13 @@ namespace Inlog.Desafio.Backend.Infra.Database.Repositories
         {
         }
 
-        public async Task<TelemetriaEntity> ObterTelemetriaAnteriorAsync(string ultimoId)
+        public async Task<TelemetriaEntity> ObterTelemetriaAnteriorAsync(string veiculoId, string ultimoTelemetriaId)
         {
-            var filter = Builders<TelemetriaEntity>.Filter.Ne(telemetria => telemetria.Id, ultimoId);
-             
+            var filter = Builders<TelemetriaEntity>.Filter.And(
+                Builders<TelemetriaEntity>.Filter.Ne(telemetria => telemetria.Id, ultimoTelemetriaId),
+                Builders<TelemetriaEntity>.Filter.Eq(telemetria => telemetria.VeiculoId, veiculoId)
+            );
+
             return await Collection
                 .Find(filter)
                 .SortByDescending(telemetria => telemetria.DataHora)

@@ -71,7 +71,9 @@ namespace Inlog.Desafio.Backend.Application.Handlers
             
             var resposta = new InserirTelemetriaResponse
             {
-                Id = telemetria.Id
+                TelemetriaId = telemetria.Id,
+                VeiculoId = telemetria.VeiculoId
+
             };
 
             return resposta;

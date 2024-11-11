@@ -18,9 +18,10 @@ namespace Inlog.Desafio.Backend.Application.Handlers
         }
         public async Task<Result<Task, Error>> Handle(AtualizarTelemetriaHistoricoEvent command, CancellationToken cancellationToken)
         {
-            var idUltimaTelemetria = command.Request.IdUltimaTelemetria;
+            var ultimaTelemetriaId = command.Request.UltimaTelemetriaId;
+            var veiculoId = command.Request.VeiculoId;
 
-            var telemetriaDesatualizada = await TelemetriaRepository.ObterTelemetriaAnteriorAsync(idUltimaTelemetria);
+            var telemetriaDesatualizada = await TelemetriaRepository.ObterTelemetriaAnteriorAsync(veiculoId, ultimaTelemetriaId);
 
             if (telemetriaDesatualizada is null)
             {

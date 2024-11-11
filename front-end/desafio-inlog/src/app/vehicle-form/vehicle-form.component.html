@@ -1,0 +1,54 @@
+<div class="form-container">
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <span class="span">Cadastro de Veículos</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Chassi</mat-label>
+      <input matInput formControlName="chassi" placeholder="Digite o chassi">
+      <mat-error *ngIf="vehicleForm.get('chassi')?.hasError('required')">
+        O campo Chassi é obrigatório.
+      </mat-error>
+      <mat-error *ngIf="vehicleForm.get('chassi')?.hasError('minlength')">
+        O chassi deve ter 17 caracteres.
+      </mat-error>
+      <mat-error *ngIf="vehicleForm.get('chassi')?.hasError('maxlength')">
+        O chassi deve ter no máximo 17 caracteres.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Placa</mat-label>
+      <input matInput formControlName="placa" placeholder="Digite a placa">
+      <mat-error *ngIf="vehicleForm.get('placa')?.hasError('required')">
+        O campo Placa é obrigatório.
+      </mat-error>
+      <mat-error *ngIf="vehicleForm.get('placa')?.hasError('pattern')">
+        A placa deve estar no formato ABC1234.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Tipo de Veículo</mat-label>
+      <input matInput formControlName="tipoVeiculo" type="number" placeholder="Digite o tipo de veículo">
+      <mat-error *ngIf="vehicleForm.get('tipoVeiculo')?.hasError('required')">
+        O campo Tipo de Veículo é obrigatório.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Cor</mat-label>
+      <input matInput formControlName="cor" placeholder="Digite a cor">
+      <mat-error *ngIf="vehicleForm.get('cor')?.hasError('required')">
+        O campo Cor é obrigatório.
+      </mat-error>
+    </mat-form-field>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="submit">Salvar</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,40 @@
+<div class="form-container">
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <span class="span">Registro de Telemetria</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <form [formGroup]="telemetryForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Latitude</mat-label>
+      <input matInput formControlName="latitude" placeholder="Digite a latitude">
+      <mat-error *ngIf="telemetryForm.get('latitude')?.hasError('required')">
+        O campo Latitude é obrigatório.
+      </mat-error>
+      <mat-error *ngIf="telemetryForm.get('latitude')?.hasError('invalidLatitude')">
+        A latitude deve estar entre -90 e 90.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Longitude</mat-label>
+      <input matInput formControlName="longitude" placeholder="Digite a longitude">
+      <mat-error *ngIf="telemetryForm.get('longitude')?.hasError('required')">
+        O campo Longitude é obrigatório.
+      </mat-error>
+      <mat-error *ngIf="telemetryForm.get('longitude')?.hasError('invalidLongitude')">
+        A longitude deve estar entre -180 e 180.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Placa do Veículo (selecione na tabela)</mat-label>
+      <input matInput [value]="selectedVehicle?.placa" disabled>
+    </mat-form-field>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!selectedVehicle">Inserir</button>
+    </div>
+  </form>
+</div>

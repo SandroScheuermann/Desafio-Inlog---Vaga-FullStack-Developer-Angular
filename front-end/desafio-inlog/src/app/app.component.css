@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+app-vehicle-telemetry {
+  width: 30%;
+  padding: 10px;
+}
+
+app-vehicle-form {
+  width: 30%;
+  padding: 10px;
+}
+
+app-map {
+  width: 100%;
+  padding: 10px;
+}
+app-vehicles-list {
+  width: 30%;
+  padding: 10px;
+}
+
