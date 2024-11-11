@@ -80,7 +80,12 @@ export class MapComponent implements OnInit, OnChanges {
 
       if (Array.isArray(response.veiculos)) {
         response.veiculos.forEach(vehicle => {
-          if (vehicle.ultimaTelemetria) {
+          if (
+            vehicle.ultimaTelemetria &&
+            vehicle.ultimaTelemetria.dataHora &&
+            vehicle.ultimaTelemetria.latitude !== 0 &&
+            vehicle.ultimaTelemetria.longitude !== 0
+          ) {
             const { latitude, longitude } = vehicle.ultimaTelemetria;
 
             const marker = L.circleMarker([latitude, longitude], {
