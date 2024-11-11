@@ -16,7 +16,7 @@ export class AppComponent {
   selectedVehicle: any | null = null;
   latitude: number | null = null;
   longitude: number | null = null;
-
+  mode: 'default' | 'historico' = 'default';
 
   onVehicleSelected(vehicle: any) {
     this.selectedVehicleLocation = vehicle.location;
@@ -26,6 +26,10 @@ export class AppComponent {
   onMapClick(coords: { latitude: number, longitude: number }) {
     this.latitude = coords.latitude;
     this.longitude = coords.longitude;
+  }
+
+  onModeChange(newMode: 'default' | 'historico') {
+    this.mode = newMode;
   }
 }
 

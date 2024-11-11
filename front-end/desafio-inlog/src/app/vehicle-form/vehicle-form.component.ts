@@ -24,6 +24,7 @@ export class VehicleFormComponent {
       tipoVeiculo: ['', Validators.required],
       cor: ['', Validators.required]
     });
+
   }
 
   onSubmit() {

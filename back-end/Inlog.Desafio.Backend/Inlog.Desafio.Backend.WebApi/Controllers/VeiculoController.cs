@@ -3,6 +3,7 @@ using Inlog.Desafio.Backend.Application.Events;
 using Inlog.Desafio.Backend.Application.Queries;
 using Inlog.Desafio.Backend.Application.Requests;
 using Inlog.Desafio.Backend.Application.ResultHandling.Errors;
+using Inlog.Desafio.Backend.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -70,7 +71,20 @@ public class VeiculoController(ILogger<VeiculoController> logger, IMediator medi
         return response.Match(
             Ok,
             error => Problem(error.Message));
-    } 
+    }
+    [HttpGet("TiposVeiculo")]
+    public IActionResult ObterTiposVeiculo()
+    {
+        var enumValues = Enum.GetValues(typeof(TipoVeiculo))
+                             .Cast<TipoVeiculo>()
+                             .Select(e => new
+                             {
+                                 Value = (int)e,
+                                 Label = e.ToString()
+                             });
+
+        return Ok(enumValues);
+    }
 
     [HttpGet("ObterHistoricoTelemetria/{idVeiculo}")]
     public async Task<IActionResult> ObterHistoricoTelemetriaAsync(int idVeiculo)
@@ -87,7 +101,7 @@ public class VeiculoController(ILogger<VeiculoController> logger, IMediator medi
 
         return response.Match(
             Ok,
-            error => Problem(error.Message)); 
+            error => Problem(error.Message));
     }
 }
 

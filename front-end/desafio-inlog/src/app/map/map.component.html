@@ -1,5 +1,12 @@
-<div id="map" style="height: 100%"></div>
+<div class="map-container">
+  <!-- Botões de alternância de modo -->
+  <mat-button-toggle-group
+    [(ngModel)]="mode"
+    aria-label="Modo do mapa"
+    (change)="loadMapData()"> <!-- Atualiza o mapa ao mudar o modo -->
+    <mat-button-toggle value="default">Última Localização</mat-button-toggle>
+    <mat-button-toggle value="historico">Histórico de Localização</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
 
-
-
-
+<div id="map" style="height: 88% "></div>

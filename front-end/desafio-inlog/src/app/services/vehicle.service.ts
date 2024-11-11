@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, tap } from 'rxjs';
+import { map, Observable, Subject, tap } from 'rxjs';
 
 interface Vehicle {
   id: number;
@@ -8,7 +8,7 @@ interface Vehicle {
   placa: string;
   tipoVeiculo: number;
   cor: string;
-  ultimaTelemetria : Telemetry;
+  ultimaTelemetria: Telemetry;
 }
 
 interface ListarVeiculoResponse {
@@ -24,6 +24,11 @@ interface Telemetry {
 
 interface HistoricoTelemetria {
   historicoPosicao: Telemetry[];
+}
+
+interface TipoVeiculo {
+  value: number;
+  label: string;
 }
 
 @Injectable({
@@ -63,6 +68,20 @@ export class VehicleService {
     return this.http.get<HistoricoTelemetria>(`${this.apiUrl}/ObterHistoricoTelemetria/${veiculoId}`);
   }
 
+  obterTipoVeiculo(): Observable<TipoVeiculo[]> {
+    return this.http.get<TipoVeiculo[]>(`${this.apiUrl}/TiposVeiculo`);
+  }
+
+  obterTipoVeiculoOptions(): Observable<TipoVeiculo[]> {
+    return this.obterTipoVeiculo().pipe(
+      map((tipoVeiculos: TipoVeiculo[]) =>
+        tipoVeiculos.map((tipo: TipoVeiculo) => ({
+          value: tipo.value,
+          label: tipo.label
+        }))
+      )
+    );
+  }
 
 }
 

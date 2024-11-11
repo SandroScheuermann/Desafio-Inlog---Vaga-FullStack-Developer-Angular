@@ -17,6 +17,7 @@ export class VehiclesListComponent {
   displayedColumns: string[] = ['chassi', 'placa', 'tipoVeiculo', 'cor', 'distancia'];
   vehicles: any[] = [];
   selectedVehicle: any = null;
+  tipoVeiculos: { [key: number]: string } = {};
 
   constructor(private vehicleService: VehicleService) { }
 
@@ -34,6 +35,14 @@ export class VehiclesListComponent {
       this.getUserLocation();
       this.loadVehicles();
     });
+
+    this.vehicleService.obterTipoVeiculo().subscribe((data) => {
+      this.tipoVeiculos = data.reduce((acc, curr) => {
+        acc[curr.value] = curr.label;
+        return acc;
+      }, {} as { [key: number]: string });
+    });
+
   }
 
   private getUserLocation(): void {
@@ -72,14 +81,13 @@ export class VehiclesListComponent {
               vehicle.ultimaTelemetria.longitude
             );
           } else {
-            vehicle.distance = null; // Define como null se os dados de telemetria não forem válidos
+            vehicle.distance = null;
           }
 
           console.log(`Veículo ${vehicle.chassi}:`, vehicle.distance);
           return vehicle;
         });
 
-        // Ordena os veículos pela distância, se disponível
         this.vehicles.sort((a, b) => (a.distance ?? Infinity) - (b.distance ?? Infinity));
       },
       error: (err) => {
@@ -90,7 +98,7 @@ export class VehiclesListComponent {
 
 
   private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
-    const R = 6371e3; // Raio da Terra em metros
+    const R = 6371e3;
     const radLat1 = this.toRadians(lat1);
     const radLat2 = this.toRadians(lat2);
     const deltaLat = this.toRadians(lat2 - lat1);
@@ -101,7 +109,7 @@ export class VehiclesListComponent {
       Math.cos(radLat1) * Math.cos(radLat2) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c; // Retorna a distância em metros
+    return R * c;
   }
 
   private toRadians(degrees: number): number {
@@ -111,6 +119,10 @@ export class VehiclesListComponent {
   selectVehicle(vehicle: any) {
     this.selectedVehicle = vehicle;
     this.vehicleSelected.emit(vehicle);
+  }
+
+  getTipoVeiculoLabel(tipo: number): string {
+    return this.tipoVeiculos[tipo] || 'Desconhecido';
   }
 }
 

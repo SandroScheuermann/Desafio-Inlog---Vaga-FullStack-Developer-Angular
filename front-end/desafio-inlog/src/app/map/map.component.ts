@@ -2,12 +2,13 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges, EventEmitter, Outpu
 import * as L from 'leaflet';
 import 'leaflet-polylinedecorator'
 import { VehicleService } from '../services/vehicle.service';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [MatChipsModule],
+  imports: [MatButtonToggleGroup, MatButtonToggle, FormsModule],
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
@@ -20,14 +21,8 @@ export class MapComponent implements OnInit, OnChanges {
 
   @Input() vehicleLocation: { lat: number, lng: number } | null = null;
   @Input() selectedVehicle: any | null = null;
+  @Input() mode: 'default' | 'historico' = 'historico';
   @Output() mapClicked = new EventEmitter<{ latitude: number, longitude: number }>();
-
-  mode: 'default' | 'historico' = 'default';
-
-  modeOptions = [
-    { label: 'Última Localização', value: 'default' },
-    { label: 'Histórico', value: 'historico' }
-  ];
 
   constructor(private vehicleService: VehicleService) { }
 
@@ -66,7 +61,7 @@ export class MapComponent implements OnInit, OnChanges {
 
   }
 
-  private loadMapData(): void {
+  protected loadMapData(): void {
     if (this.mode === 'historico' && this.selectedVehicle) {
       this.loadHistoricalMode();
     } else if (this.mode === 'default') {
@@ -87,9 +82,9 @@ export class MapComponent implements OnInit, OnChanges {
             const { latitude, longitude } = vehicle.ultimaTelemetria;
 
             const marker = L.circleMarker([latitude, longitude], {
-              radius: 8,
-              color: 'blue',
-              fillColor: 'white',
+              radius: 10,
+              color: 'white',
+              fillColor: 'blue',
               fillOpacity: 1
             }).bindPopup(`
           <div><strong>Veículo:</strong> ${vehicle.chassi}</div>

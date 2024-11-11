@@ -18,7 +18,7 @@ app-vehicles-list {
 }
 
 app-map {
-  width: 65%; /* O mapa ocupará o restante do espaço em telas grandes */
+  width: 64%; /* O mapa ocupará o restante do espaço em telas grandes */
   height: 600px; /* Altura fixa para o mapa */
   padding: 10px;
   background-color: #2e2e2e;

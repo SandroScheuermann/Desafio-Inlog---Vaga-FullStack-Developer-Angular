@@ -1,4 +1,8 @@
 <div class="container">
+  <app-map [mode]="mode" [selectedVehicle]="selectedVehicle" (mapClicked)="onMapClick($event)"></app-map>
+
+  <app-vehicles-list (vehicleSelected)="onVehicleSelected($event)"></app-vehicles-list>
+
   <app-vehicle-form></app-vehicle-form>
 
   <app-vehicle-telemetry
@@ -6,10 +10,6 @@
     [latitude]="latitude"
     [longitude]="longitude">
   </app-vehicle-telemetry>
-
-  <app-vehicles-list (vehicleSelected)="onVehicleSelected($event)"></app-vehicles-list>
-
-  <app-map [selectedVehicle]="selectedVehicle" (mapClicked)="onMapClick($event)"></app-map>
 
 </div>
 
